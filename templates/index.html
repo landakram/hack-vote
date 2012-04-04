@@ -24,8 +24,8 @@
   </thead>
   <tbody>
     {% for project in projects %}
-    <tr id={{"project" + project.id}} >
-      <td class="id"> {{project.id}} </td>
+    <tr id="project{{loop.index0}}" >
+      <td class="id"> {{loop.index0}} </td>
       <td class="name"> {{project.name}} </td>
       <td class="descr"> {{project.descr}} </td>
       <td class="votes"> {{project.votes}} </td>
@@ -39,8 +39,9 @@
   $(document).ready(function() {
     setTimeout(function() {
       $.get("/list", function(data) {
-      for (project in data.projects) {
-        $("#project" + project.id + " .votes").html(project.votes);
+      for (var i = 0; i < projects.length; i++) {
+        var project = projects[i];
+        $("#project" + i + " .votes").html(project.votes);
       }
       console.log('Load was performed.');
       });
