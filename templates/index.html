@@ -1,0 +1,62 @@
+<html>
+<head>
+<title>5C Hackathon</title>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<link href="css/bootstrap.min.css"/>
+</head>
+
+<body>
+<h1> 5C Hackathon Crowd Favorite </h1>
+
+<div class="result"/>
+
+<ul>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Number<th>
+      <th>Project Name<th>
+      <th>Description<th>
+      <th>Votes<th>
+      <th>Span<th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for project in projects %}
+    <tr id={{"project" + project.id}} >
+      <td class="id"> {{project.id}} </td>
+      <td class="name"> {{project.name}} </td>
+      <td class="descr"> {{project.descr}} </td>
+      <td class="votes"> {{project.votes}} </td>
+      <td> </td>
+    </tr>
+    {% end for%}
+  </tbody>
+</table>
+
+<script type='text/javascript'>
+  $(document).ready(function() {
+    setTimeout(function() {
+      $.get("/hackvote", function(data) {
+      for (project in data.projects) {
+        $("#project" + project.id + " .votes").html(project.votes);
+      }
+      console('Load was performed.');
+      });
+    }, 2000);
+  });
+</script>
+
+</body>
+
+</html>
+
+
+<!-- 
+data will have:
+  list of javascript objects called data.projects
+  project will have:
+    id 
+    title
+    descr
+    votes -->
