@@ -24,7 +24,7 @@
   </thead>
   <tbody>
     {% for project in projects %}
-    <tr id={{"project" + project.id}} >
+    <tr id={{"project" + loop.index0}} >
       <td class="id"> {{loop.index0}} </td>
       <td class="name"> {{project.name}} </td>
       <td class="descr"> {{project.descr}} </td>
