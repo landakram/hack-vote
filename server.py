@@ -25,13 +25,13 @@ def vote():
         resp = twilio.twiml.Response()
         resp.sms('Thanks, but you already voted!') 
     else:
-        ident = int(request.args.get('Body', ''))
         try:
+            ident = int(request.args.get('Body', ''))
             projects[ident]['votes'] += 1
             numbers.add(from_number)
             resp = twilio.twiml.Response()
             resp.sms('Thanks for the vote!') 
-        except ValueError:
+        except (ValueError, IndexError):
             resp = twilio.twiml.Response()
             resp.sms("That isn't a valid project id.") 
 
