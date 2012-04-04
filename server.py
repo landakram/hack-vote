@@ -26,7 +26,8 @@ def vote():
         resp.sms('Thanks, but you already voted!') 
     else:
         try:
-            ident = int(request.args.get('Body', ''))
+            body = request.args.get('Body', '')
+            ident  = int(body.lower().split(' ')[-1])
             projects[ident]['votes'] += 1
             numbers.add(from_number)
             resp = twilio.twiml.Response()
