@@ -1,8 +1,9 @@
+<!doctype html>
 <html>
 <head>
 <title>5C Hackathon</title>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
-<link href="css/bootstrap.min.css"/>
+<link href="/static/css/bootstrap.min.css" rel="stylesheet" type"text/css"/>
 </head>
 
 <body>
@@ -30,18 +31,18 @@
       <td class="votes"> {{project.votes}} </td>
       <td> </td>
     </tr>
-    {% end for%}
+    {% endfor %}
   </tbody>
 </table>
 
 <script type='text/javascript'>
   $(document).ready(function() {
     setTimeout(function() {
-      $.get("/hackvote", function(data) {
+      $.get("/list", function(data) {
       for (project in data.projects) {
         $("#project" + project.id + " .votes").html(project.votes);
       }
-      console('Load was performed.');
+      console.log('Load was performed.');
       });
     }, 2000);
   });
