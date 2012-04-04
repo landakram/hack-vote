@@ -7,7 +7,7 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 
 numbers = set()
-projects = [{"title": "Jesse, Mark and Brennen's Project", "descr":"An awesome project!", "votes":0}]
+projects = [{"name": "Jesse, Mark and Brennen's Project", "descr":"An awesome project!", "votes":0}]
 
 @app.route('/')
 def index():
