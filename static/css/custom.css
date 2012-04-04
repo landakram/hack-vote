@@ -1,0 +1,12 @@
+.container h1, .container h3 {
+	text-align: center;
+}
+
+.header {
+	margin-top: 50px;
+}
+
+.results {
+	margin-top: 20px;
+}
+
