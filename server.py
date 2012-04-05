@@ -1,6 +1,7 @@
 import os
 from flask import Flask, request, redirect, g, render_template, jsonify
 import twilio.twiml
+import logging
 from twilio.rest import TwilioRestClient
 
 
@@ -8,6 +9,7 @@ from twilio.rest import TwilioRestClient
 DEBUG = True
 app = Flask(__name__)
 app.config.from_object(__name__)
+
 
 numbers = set()
 projects = [{"name": "Jesse, Mark and Brennen's Project", "descr":"An awesome project!", "votes":3}]
@@ -24,13 +26,14 @@ def list():
 def vote():
     from_number = request.args.get('From', None)
     client = TwilioRestClient(os.environ['ACCOUNT_SID'], os.environ['AUTH_TOKEN'])
+    app.logger.debug("Number is " + from_number)
     # number exists
     if from_number in numbers:
         message = client.sms.messages.create(to=from_number,from_="+14156589963",body="Thanks, but you already voted!")
     else:
         body = request.args.get('Body', '')
         letters = "ABCDEFGHIJKLMNOP"
-        ident  = letters.find(body.strip())
+        ident = letters.find(body.strip())
         if ident == -1 or ident >= len(projects):
             message = client.sms.messages.create(to=from_number,from_="+14156589963",body="That is an invalid vote, please try again!")
         else:
