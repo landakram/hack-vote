@@ -33,7 +33,7 @@ def vote():
         body = request.args.get('Body', '')
         letters = "ABCDEFGHIJKLMNOP"
         ident = letters.find(body.strip())
-        if ident == -1 or ident >= len(projects):
+        if len(body) != 1 or ident == -1 or ident >= len(projects):
             resp.sms('That is an invalid vote, please try again!')
         else:
             projects[ident]['votes'] += 1
