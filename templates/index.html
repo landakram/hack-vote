@@ -19,7 +19,7 @@
         <table class="table">
           <thead>
             <tr>
-              <th class="span1">Number</th>
+              <th class="span1">ID</th>
               <th class="span3">Project Name</th>
               <th class="span5"></th>
               <th class="span1">Votes</th>
@@ -28,7 +28,7 @@
           <tbody>
             {% for project in projects %}
             <tr id="project{{loop.index0}}" >
-              <td class="id"> {{loop.index0}} </td>
+              <td class="id"> {{"ABCDEFGHIJLKMNOPQRS"[loop.index0]}} </td>
               <td class="name"> {{project.name}} </td>
               <td>
                 <div class="progress progress-{{["info","success", "alert", "warning"][loop.index0]}}">

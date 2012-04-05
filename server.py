@@ -1,10 +1,14 @@
 import os
 from flask import Flask, request, redirect, g, render_template, jsonify
 import twilio.twiml
+import logging
+
+
 
 DEBUG = True
 app = Flask(__name__)
 app.config.from_object(__name__)
+
 
 numbers = set()
 projects = [{"name": "Jesse, Mark and Brennen's Project", "descr":"An awesome project!", "votes":3}]
@@ -20,21 +24,22 @@ def list():
 @app.route('/vote', methods=['POST'])
 def vote():
     from_number = request.args.get('From', None)
+    app.logger.debug("Number is %s" % from_number)
     # number exists
+    resp = twilio.twiml.Response()
     if from_number in numbers:
-        resp = twilio.twiml.Response()
-        resp.sms('Thanks, but you already voted!') 
+        resp.sms("Thanks, but you already voted!")
     else:
-        try:
-            body = request.args.get('Body', '')
-            ident  = int(body.lower().split(' ')[-1])
+        body = request.args.get('Body', '')
+        letters = "ABCDEFGHIJKLMNOP"
+        ident = letters.find(body.strip())
+        if ident == -1 or ident >= len(projects):
+            resp.sms('That is an invalid vote, please try again!')
+        else:
             projects[ident]['votes'] += 1
             numbers.add(from_number)
-            resp = twilio.twiml.Response()
-            resp.sms('Thanks for the vote!') 
-        except (ValueError, IndexError):
-            resp = twilio.twiml.Response()
-            resp.sms("That isn't a valid project id.") 
+            resp.sms('Thank you for your vote!')
+    return str(resp)
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
