@@ -29,7 +29,7 @@ def vote():
     if from_number in numbers:
         resp.sms("Thanks, but you already voted!")
     else:
-        body = request.args.get('Body', '').strip()
+        body = request.form['Body'].strip()
         letters = "ABCDEFGHIJKLMNOP"
         ident = letters.find(body)
         if len(body) != 1 or ident == -1 or ident >= len(projects):
