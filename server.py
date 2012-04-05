@@ -21,7 +21,7 @@ def index():
 def list():
     return jsonify(projects=projects)
 
-@app.route('/vote', methods=['POST'])
+@app.route('/vote', methods=['GET', 'POST'])
 def vote():
     from_number = request.args.get('From')
     app.logger.debug("Number is %s" % from_number)
