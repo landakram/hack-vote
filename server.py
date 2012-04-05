@@ -21,19 +21,18 @@ def index():
 def list():
     return jsonify(projects=projects)
 
-@app.route('/vote', methods=['GET', 'POST'])
+@app.route('/vote', methods=['POST'])
 def vote():
-    from_number = request.args.get('From')
-    app.logger.debug("Number is %s" % from_number)
+    from_number = request.form['From']
     # number exists
     resp = twilio.twiml.Response()
     if from_number in numbers:
         resp.sms("Thanks, but you already voted!")
     else:
-        body = request.args.get('Body', '')
+        body = request.form['Body'].strip()
         letters = "ABCDEFGHIJKLMNOP"
-        ident = letters.find(body.strip())
-        if ident == -1 or ident >= len(projects):
+        ident = letters.find(body)
+        if len(body) != 1 or ident == -1 or ident >= len(projects):
             resp.sms('That is an invalid vote, please try again!')
         else:
             projects[ident]['votes'] += 1
