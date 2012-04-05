@@ -24,15 +24,14 @@ def list():
 @app.route('/vote', methods=['POST'])
 def vote():
     from_number = request.form['From']
-    app.logger.debug("Number is %s" % from_number)
     # number exists
     resp = twilio.twiml.Response()
     if from_number in numbers:
         resp.sms("Thanks, but you already voted!")
     else:
-        body = request.args.get('Body', '')
+        body = request.args.get('Body', '').strip()
         letters = "ABCDEFGHIJKLMNOP"
-        ident = letters.find(body.strip())
+        ident = letters.find(body)
         if len(body) != 1 or ident == -1 or ident >= len(projects):
             resp.sms('That is an invalid vote, please try again!')
         else:
