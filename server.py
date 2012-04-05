@@ -23,7 +23,7 @@ def list():
 
 @app.route('/vote', methods=['POST'])
 def vote():
-    from_number = request.args.get('From', None)
+    from_number = request.args.get('From')
     app.logger.debug("Number is %s" % from_number)
     # number exists
     resp = twilio.twiml.Response()
