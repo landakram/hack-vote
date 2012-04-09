@@ -11,7 +11,17 @@ app.config.from_object(__name__)
 
 
 numbers = set()
-projects = [{"name": "Jesse, Mark and Brennen's Project", "descr":"An awesome project!", "votes":3}]
+projects = [
+{"name": "5C Course Recommender", "votes":0},
+{"name": "5C Word War", "votes":0},
+{"name": "Team Papa Bear", "votes":0},
+{"name": "5Ception", "votes":0},
+{"name": "Dragonfire", "votes": 0},
+{"name": "Flixnext", "votes":0},
+{"name": "Loki", "votes":0},
+{"name": "5C Map", "votes":0},
+{"name": "Team Antartica", "votes":0}
+]
 
 @app.route('/')
 def index():
